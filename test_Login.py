@@ -49,10 +49,6 @@ class searchTestCase(unittest.TestCase):
 
 
 
-def suit(self):
-    self.test_suite = unittest.TestSuite()
-    self.test_suite.addTest(searchTestCase)
-    return self.test_suite
 
 
 
