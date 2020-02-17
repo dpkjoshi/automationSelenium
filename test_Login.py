@@ -1,5 +1,6 @@
 import unittest
 from selenium import webdriver
+import HtmlTestRunner
 
 
 class searchTestCase(unittest.TestCase):
@@ -8,37 +9,25 @@ class searchTestCase(unittest.TestCase):
     def setUpClass(cls):
         #create  firefox driver
         cls.driver = webdriver.Firefox(executable_path=r'C:\Users\Deepak\Downloads\geckodriver.exe')
-        cls.driver.implicitly_wait(30)
-        cls.driver.maximize_window()
-        cls.driver.get("https://www.google.com/")
-        cls.driver.refresh()
 
 
-
-    def test_searchByText(self):
+    def test_pageTitle(self):
         #self.searchField = self.driver.find_element_by_id("search_form_input_homepage")
-        self.searchField =self.driver.find_element_by_name("q")
+        self.driver.get("https://opensource-demo.orangehrmlive.com/")
+        self.assertEqual("OrangeHRM",self.driver.title,"Test Passed")
+        # self.assertEqual("orange",self.driver.title,"test failed")
+
+    def test_Login(self):
+        self.driver.get("https://opensource-demo.orangehrmlive.com/")
+        self.driver.find_element_by_name("txtUsername").send_keys("Admin")
+        self.driver.find_element_by_name("txtPassword").send_keys("admin123")
+        self.driver.find_element_by_name("Submit").click()
+        self.assertEqual("OrangeHRM",self.driver.title,"Title not matching")
 
 
-        #Enter search keyword :
-        self.searchField.send_keys("Facebook")
-        self.searchField.submit()
-        print("Test 1")
 
+        #Enter search keyword :s
 
-
-    def test_searchByText2(self):
-        # self.searchField = self.driver.find_element_by_id("search_form_input_homepage")
-        self.searchField = self.driver.find_element_by_name("q")
-
-        # Enter search keyword :
-        self.searchField.send_keys("facebook")
-        self.searchField.submit()
-        print("Test 2")
-
-        currentURL = self.driver.current_url
-
-        self.assertNotEqual("http://www.google.com/",currentURL,msg="Test Passed")
 
 
 
@@ -55,6 +44,6 @@ class searchTestCase(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output=r'C:\Users\Deepak\PycharmProjects\seleniumFramework\Reports'))
 
 
